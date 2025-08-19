@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Workflow Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "@google/genai": "https://esm.sh/@google/genai@1.8.0"
+  }
+}
+</script>
+  <style>
+    /* === Glass core (tiny, framework‑agnostic) ============================ */
+    :root{
+      /* tweak these to taste */
+      --glass-bg-rgb: 18,18,21;      /* dark surface behind the blur */
+      --glass-alpha: .28;            /* transparency */
+      --glass-blur: 18px;            /* blur radius */
+      --neon-a: 255, 255, 240;       /* ivory white */
+      --neon-b: 0,229,255;           /* cyan */
+    }
+    .glass{ 
+      background: rgba(var(--glass-bg-rgb), var(--glass-alpha));
+      backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: 0 8px 30px rgba(0,0,0,.35);
+      border-radius: 16px;
+    }
+    /* neon border that doesn’t fill the inside (pure CSS, no images) */
+    .neon{ position: relative; }
+    .neon::before{
+      content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+      background: linear-gradient(120deg, rgb(var(--neon-b)) 0%, rgb(var(--neon-a)) 50%, rgb(var(--neon-b)) 100%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; /* punch the middle out */
+      pointer-events: none; filter: drop-shadow(0 0 8px rgba(var(--neon-a),.35));
+    }
+    .intro-animation .neon::before {
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    /* intensity presets */
+    .glass-strong { --glass-alpha: .16; --glass-blur: 22px; }
+    .glass-subtle { --glass-alpha: .40; --glass-blur: 12px; }
+
+    /* Optional tiny utility padding to match your current HTML tokens */
+    .p-6{padding:1.5rem} .p-8{padding:2rem}
+    .grid{display:grid} .gap-6{gap:1.5rem}
+    .lg-grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .lg-col-span-1{grid-column:span 1 / span 1} .lg-col-span-2{grid-column:span 2 / span 2}
+
+    /* Demo page bg (can remove in real page) */
+    body{margin:0;min-height:100dvh;color:#F5F5F7;background:radial-gradient(1200px 600px at 10% -10%, #1e293b 0%, #0b0e11 60%),
+    url('https://images.dreamstime.com/las-vegas-nevada-april-vibrant-night-scene-strip-featuring-eiffel-tower-replica-colorful-hot-air-balloon-bustling-image339110456.jpg') center/cover fixed; background-blend-mode:overlay; font:18px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif}
+    h1{margin:0 0 .5rem;font:700 2.5rem/1.2 Orbitron, system-ui, sans-serif}
+    .muted{color:#A9B1D6}
+
+    /* Animations */
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
+    
+    @keyframes slide-in-bottom { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .animate-slide-in-bottom { animation: slide-in-bottom 0.4s ease-out forwards; }
+
+    .animate-slide-in-bottom-staggered {
+        opacity: 0; /* Start hidden, let animation fill it */
+        animation: slide-in-bottom 0.5s ease-out forwards;
+    }
+    
+    /* Inline Editor Styles */
+    .prose-like {
+        line-height: 1.6;
+    }
+    .prose-like h1, .prose-like h2, .prose-like h3 {
+        margin-bottom: 0.5em;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    .prose-like h1 { font-size: 1.5em; }
+    .prose-like h2 { font-size: 1.25em; }
+    .prose-like h3 { font-size: 1.1em; }
+    .prose-like p { margin-bottom: 1em; }
+    .prose-like strong { font-weight: 600; }
+    .prose-like em { font-style: italic; }
+
+    [contentEditable="true"]:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(var(--neon-b), 0.5);
+        border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

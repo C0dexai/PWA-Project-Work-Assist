@@ -1,0 +1,6 @@
+{
+  "name": "PWA-Project Workflow Assistant",
+  "description": "An interactive tool to guide you through the initial setup of a new software project, with AI-powered suggestions for each step.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
