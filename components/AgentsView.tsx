@@ -11,7 +11,7 @@ const AgentsView: React.FC = () => {
   const [animationStage, setAnimationStage] = useState<AnimationStage>('loading');
 
   useEffect(() => {
-    let stageTimer: NodeJS.Timeout;
+    let stageTimer: ReturnType<typeof setTimeout>;
     if (animationStage === 'loading') {
       stageTimer = setTimeout(() => {
         setAnimationStage('greeting');

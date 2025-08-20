@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import WorkflowView from './components/WorkflowView';
 import AgentsView from './components/AgentsView';
+import SettingsView from './components/SettingsView';
 import ClipboardListIcon from './components/icons/ClipboardListIcon';
 import UsersIcon from './components/icons/UsersIcon';
+import CogIcon from './components/icons/CogIcon';
 
-type Tab = 'workflow' | 'agents';
+type Tab = 'workflow' | 'agents' | 'settings';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('workflow');
@@ -15,6 +17,8 @@ const App: React.FC = () => {
         return <WorkflowView />;
       case 'agents':
         return <AgentsView />;
+      case 'settings':
+        return <SettingsView />;
       default:
         return null;
     }
@@ -48,6 +52,7 @@ const App: React.FC = () => {
                 <nav className="flex items-center gap-4 h-full" role="tablist">
                     <TabButton tabName="workflow" label="Project Workflow" icon={<ClipboardListIcon className="w-5 h-5" />} />
                     <TabButton tabName="agents" label="AI Family Agents" icon={<UsersIcon className="w-5 h-5" />} />
+                    <TabButton tabName="settings" label="Settings" icon={<CogIcon className="w-5 h-5" />} />
                 </nav>
             </div>
         </div>
